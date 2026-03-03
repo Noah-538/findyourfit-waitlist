@@ -139,11 +139,47 @@ export async function POST(req: Request) {
 
       const resend = new Resend(apiKey);
 
+      const htmlTemplate = `
+      <!doctype html>
+      <html>
+        <body style="margin:0;padding:0;background:#0b0b0b;color:#F5F1E8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial;">
+          <div style="max-width:560px;margin:40px auto;background:#111111;border-radius:16px;padding:24px;">
+            
+            <div style="font-weight:700;font-size:16px;">fyndyourfit</div>
+
+            <h1 style="margin-top:20px;font-size:22px;">
+              Willkommen – du bist drin ✅
+            </h1>
+
+            <p style="opacity:0.85;font-size:14px;">
+              Wir haben deine E-Mail erfolgreich zur Waitlist hinzugefügt.
+              Sobald Early Access startet, bekommst du als Erste:r Bescheid.
+            </p>
+
+            <div style="margin:20px 0;padding:12px;background:rgba(245,241,232,0.05);border-radius:12px;font-size:13px;">
+              <strong>E-Mail:</strong> ${email}
+            </div>
+
+            <a href="https://fyndyourfit.com"
+              style="display:inline-block;background:#B11226;color:#F5F1E8;
+              padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:600;">
+              Mehr erfahren
+            </a>
+
+            <p style="margin-top:20px;font-size:12px;opacity:0.6;">
+              Falls du dich nicht angemeldet hast, ignoriere diese Mail einfach.
+            </p>
+
+          </div>
+        </body> 
+      </html>
+      `;
+
       await resend.emails.send({
-        from: "FindYourFit <noreply@fyndyourfit.com>",
+        from: "Fyndyourfit <noreply@fyndyourfit.com>",
         to: email,
-        subject: "Willkommen bei FindYourFit 🚀",
-        html: `<h1>Welcome to FindYourFit</h1><p>Danke für deine Anmeldung zur Waitlist.</p>`,
+        subject: "Du bist auf der Waitlist ✅",
+        html: htmlTemplate,
       });
 
       emailSent = true;
