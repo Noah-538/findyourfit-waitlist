@@ -199,7 +199,67 @@ export default function Home() {
         </section>
 
         <footer className="pb-4 text-xs text-[color:rgba(245,241,232,0.4)]">
-          © {year} FyndYourFit. All rights reserved.
+          <div className="flex flex-wrap items-center gap-3">
+            <span>© {year} FyndYourFit. All rights reserved.</span>
+            <a
+              href="#impressum"
+              className="text-[var(--accent)] transition-opacity hover:opacity-80"
+            >
+              Impressum
+            </a>
+          </div>
+
+          <div
+            id="impressum"
+            className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-[color:rgba(245,241,232,0.72)] backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
+          >
+            <h2 className="text-sm font-semibold text-[var(--foreground)]">Impressum</h2>
+            <div className="mt-4 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-[var(--foreground)]">
+                  Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)
+                </p>
+                <p>fyndyourfit</p>
+                <p>Ein Angebot der Frey, Schulze & Schäfers GbR</p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[var(--foreground)]">Anschrift</p>
+                <p>Untere Heerbergstraße 27, 97078 Würzburg, Deutschland</p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[var(--foreground)]">Gesellschafter</p>
+                <p>Noah Schulze</p>
+                <p>Ian Frey</p>
+                <p>Enno Schäfers</p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[var(--foreground)]">Kontakt</p>
+                <p>E-Mail: info@fyndyourfit.com</p>
+                <p>Telefon: +49 160 9037 6756</p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[var(--foreground)]">
+                  Verbraucherstreitbeilegung / Universalschlichtungsstelle
+                </p>
+                <p>
+                  Wir sind nicht verpflichtet und nicht bereit, an
+                  Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+                  teilzunehmen.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[var(--foreground)]">
+                  Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
+                </p>
+                <p>Ian Frey, Untere Heerbergstraße 27, 97078 Würzburg</p>
+              </div>
+            </div>
+          </div>
         </footer>
       </div>
 
