@@ -30,13 +30,13 @@ export default function Home() {
           <div className="group flex items-center gap-3">
             <img
               src="/logo.jpg"
-              alt="FindYourFit"
+              alt="FyndYourFit"
               width={40}
               height={40}
               style={{ borderRadius: 12, objectFit: "cover" }}
             />
             <span className="text-sm font-semibold tracking-tight text-[var(--accent)] transition-opacity group-hover:opacity-90">
-              FindYourFit
+              FyndYourFit
             </span>
           </div>
 
@@ -199,7 +199,7 @@ export default function Home() {
         </section>
 
         <footer className="pb-4 text-xs text-[color:rgba(245,241,232,0.4)]">
-          © {year} FindYourFit. All rights reserved.
+          © {year} FyndYourFit. All rights reserved.
         </footer>
       </div>
 
