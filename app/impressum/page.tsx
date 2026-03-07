@@ -56,7 +56,7 @@ export default function ImpressumPage() {
               <div className="space-y-6 text-sm leading-relaxed text-[color:rgba(245,241,232,0.78)] sm:text-base">
 
                 <div>
-                  <p className="font-medium text-[var(--foreground)]">fyndyourfit</p>
+                  <p className="font-medium text-[var(--foreground)]">FyndYourFit</p>
                   <p>Ein Angebot der Frey, Schulze & Schäfers GbR</p>
                 </div>
 
