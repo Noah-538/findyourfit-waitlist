@@ -28,7 +28,13 @@ export default function Home() {
         {/* Top bar */}
         <header className="flex items-center justify-between">
           <div className="group flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,0.03)] transition-all duration-300 group-hover:border-[var(--accent)]/35 group-hover:bg-[var(--accent)]/10 group-hover:shadow-[0_0_40px_rgba(139,0,0,0.18)]" />
+            <img
+              src="/logo.jpg"
+              alt="FindYourFit"
+              width={40}
+              height={40}
+              style={{ borderRadius: 12, objectFit: "cover" }}
+            />
             <span className="text-sm font-semibold tracking-tight text-[var(--accent)] transition-opacity group-hover:opacity-90">
               FindYourFit
             </span>
@@ -76,24 +82,26 @@ export default function Home() {
                 <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-              
+                
                   const res = await fetch("/api/subscribe", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email }),
                   });
-              
-                  let data: any = {};
-                  try {
-                    data = await res.json();
-                  } catch {}
-              
+                
+                  const data = await res.json().catch(() => ({}));
+                
                   if (res.ok) {
-                    setDone(true);
-                  } else {
-                    alert(data?.error || "Something went wrong.");
-                    console.log("API error:", data);
+                    window.location.href = "/thanks";
+                    return;
                   }
+                
+                  if (res.status === 409) {
+                    alert("Du bist schon auf der Waitlist 🙂");
+                    return;
+                  }
+                
+                  alert(data?.error ?? "Something went wrong.");
                 }}
                   className="flex flex-col gap-3 sm:flex-row"
                 >
@@ -148,7 +156,34 @@ export default function Home() {
                   ].join(" ")}
                   style={{ animationDelay: `${i * 0.25}s` }}
                 >
-                  <div className="mb-3 h-8 w-8 rounded-xl border border-white/10 bg-white/5 transition-all duration-300 group-hover:border-[var(--accent)]/35 group-hover:bg-[var(--accent)]/10" />
+                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all duration-300 group-hover:border-[var(--accent)]/35 group-hover:bg-[var(--accent)]/10">
+                    {i === 0 && (
+                      /* Globe icon for Brand Discovery */
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M2 12h20" />
+                        <path d="M12 2a15 15 0 0 1 0 20" />
+                        <path d="M12 2a15 15 0 0 0 0 20" />
+                      </svg>
+                    )}
+
+                    {i === 1 && (
+                      /* Price comparison arrows */
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 7h12" />
+                        <path d="M12 4l4 3-4 3" />
+                        <path d="M20 17H8" />
+                        <path d="M12 14l-4 3 4 3" />
+                      </svg>
+                    )}
+
+                    {i === 2 && (
+                      /* Star icon for Favorites */
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="12 2 15 9 22 9 17 14 19 21 12 17 5 21 7 14 2 9 9 9" />
+                      </svg>
+                    )}
+                  </div>
                   <h3 className="text-sm font-medium">{f.title}</h3>
                   <p className="mt-2 text-sm text-[color:rgba(245,241,232,0.55)]">
                     {f.desc}

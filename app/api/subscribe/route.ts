@@ -154,11 +154,19 @@ export async function POST(req: Request) {
       if (!apiKey) throw new Error("RESEND_API_KEY fehlt in .env.local");
 
       const resend = new Resend(apiKey);
-      const logoUrl = process.env.EMAIL_LOGO_URL || "http://localhost:3000/logo.jpg";
+
+      // Emails need an ABSOLUTE, publicly reachable HTTPS URL for images.
+      // `localhost` will not work in real inboxes.
+      const siteUrl =
+        process.env.NEXT_PUBLIC_SITE_URL ||
+        process.env.SITE_URL ||
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
+      const logoUrl = process.env.EMAIL_LOGO_URL || `${siteUrl}/logo.jpg`;
 
       const htmlTemplate = `
       <!doctype html>
-      <html lang="de">
+      <html lang="en">
         <head>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -179,7 +187,7 @@ export async function POST(req: Request) {
 
           <!-- Preheader (hidden preview text) -->
           <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
-            Du bist auf der FindYourFit Waitlist – Early Access & Updates folgen bald.
+            You are on the FindYourFit waitlist — early access and updates are coming soon.
           </div>
 
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#0b0b0b;">
@@ -213,33 +221,33 @@ export async function POST(req: Request) {
                             </div>
 
                             <h1 class="h1" style="margin:16px 0 0 0;font-size:24px;line-height:1.25;color:#ffffff;">
-                              Willkommen bei FindYourFit.
+                              Welcome to FindYourFit.
                             </h1>
 
                             <p class="p" style="margin:12px 0 0 0;font-size:15px;line-height:1.6;color:rgba(255,255,255,0.86);">
-                              Du bist jetzt offiziell auf unserer Waitlist – und damit unter den Ersten, die Zugang bekommen.
+                              You are now officially on our waitlist — and among the first to get access.
                             </p>
 
                             <p class="p" style="margin:12px 0 0 0;font-size:14px;line-height:1.65;color:rgba(255,255,255,0.74);">
-                              Wir bauen ein datenbasiertes Vergleichsportal für Mode, damit du schneller findest, was wirklich zu dir passt:
-                              <span style="color:#ffffff;">weniger Scrollen</span>,
-                              <span style="color:#ffffff;">mehr Klarheit</span>,
-                              <span style="color:#ffffff;">bessere Entscheidungen</span>.
+                              We are building a data&#8209;driven fashion comparison platform so you can find what truly fits you faster:
+                              <span style="color:#ffffff;">less scrolling</span>,
+                              <span style="color:#ffffff;">more clarity</span>,
+                              <span style="color:#ffffff;">better decisions</span>.
                             </p>
 
                             <!-- Email box -->
                             <div style="margin:18px 0 0 0;padding:14px 14px;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);">
-                              <div style="font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:6px;">Registrierte E-Mail</div>
+                              <div style="font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:6px;">Registered email</div>
                               <div style="font-size:14px;color:#ffffff;font-weight:600;word-break:break-word;">${email}</div>
                             </div>
 
                             <!-- What happens next -->
                             <div style="margin:18px 0 0 0;padding:14px 14px;border-radius:14px;background:rgba(177,18,38,0.08);border:1px solid rgba(177,18,38,0.22);">
-                              <div style="font-size:13px;color:#ffffff;font-weight:700;margin-bottom:8px;">Was passiert als Nächstes?</div>
+                              <div style="font-size:13px;color:#ffffff;font-weight:700;margin-bottom:8px;">What happens next?</div>
                               <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,0.78);">
-                                • Early-Access Einladung (priorisiert)
-                                <br/>• Updates zu neuen Features & Brands
-                                <br/>• Optional: kurze Umfrage, damit wir FYF auf dich zuschneiden können
+                                • Early access invitation (prioritized)
+                                <br/>• Updates about new features and brands
+                                <br/>• Optional: short survey so we can tailor FYF to you
                               </div>
                             </div>
 
@@ -248,7 +256,7 @@ export async function POST(req: Request) {
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                               <tr>
                                 <td align="left">
-                                  <a class="btn" href="https://fyndyourfit.com"
+                                  <a class="btn" href="https://instagram.com/fyndyourfit"
                                     style="display:inline-block;background:#B11226;color:#ffffff;
                                     padding:14px 18px;border-radius:14px;text-decoration:none;font-weight:700;
                                     font-size:14px;letter-spacing:0.2px;">
@@ -259,8 +267,7 @@ export async function POST(req: Request) {
                             </table>
 
                             <p class="p" style="margin:16px 0 0 0;font-size:12px;line-height:1.6;color:rgba(255,255,255,0.60);">
-                              Tipp: Antworte einfach auf diese Mail und sag uns, welche Brands du am liebsten trägst –
-                              das hilft uns extrem beim Feinschliff.
+                              Tip: simply reply to this email and tell us which brands you like the most — it helps us refine the platform.
                             </p>
 
                           </td>
@@ -270,7 +277,7 @@ export async function POST(req: Request) {
                         <tr>
                           <td style="padding:14px 24px 22px 24px;border-top:1px solid rgba(255,255,255,0.06);">
                             <div style="font-size:12px;line-height:1.55;color:rgba(255,255,255,0.55);">
-                              Falls du dich nicht angemeldet hast, kannst du diese Mail ignorieren.
+                              If you did not sign up for this, you can safely ignore this email.
                               <br/>
                               <span style="color:rgba(255,255,255,0.42);">© ${new Date().getFullYear()} FindYourFit</span>
                             </div>
