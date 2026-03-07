@@ -201,6 +201,12 @@ export default function Home() {
         <footer className="pb-4 text-xs text-[color:rgba(245,241,232,0.4)]">
           <div className="flex flex-wrap items-center gap-3">
             <span>© {year} FyndYourFit. All rights reserved.</span>
+            <a
+              href="/impressum"
+              className="text-[var(--accent)] transition-opacity hover:opacity-80"
+            >
+              Impressum
+            </a>
           </div>
         </footer>
       </div>
